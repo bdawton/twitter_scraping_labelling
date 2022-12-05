@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+/tempstore
+/tmp
+log.txt
+config.py
+*.json
