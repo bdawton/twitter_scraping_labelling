@@ -6,6 +6,9 @@ import json
 import pandas as pd
 import numpy as np
 import config
+import spacy
+import copy
+from tweet_analysis_functions import prefilter_tweet
 
 
 def create_connection(db_file):
@@ -98,6 +101,7 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
     tweet_reply_count_list = []
     tweet_like_count_list = []
     tweet_quote_count_list = []
+    tweet_language_list = []
 
     tweet_data = tweet_json["data"]
     for tweet in tweet_data:
@@ -178,21 +182,35 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
     
     return df_tweet_data, df_tweet_includes
 
+
+
 def main():
+    #nlp = spacy.load('ja_ginza_electra')  #No idea when to deal with this
+    tweet_data_frame_list = []
+    tweet_includes_frame_list = []
+    location_keyword_list = ["伊牟田", "白糸滝", "香港"]
+    debug_json_tweet_list = []
+    prefiltered_tweet_list = []
+    for location_keyword in location_keyword_list:
+        json_tweet = obtain_tweet(location_keyword , "2019-01-01","2021-12-31","test_collection.json")
+        debug_tweet = copy.deepcopy(json_tweet) #this is for DEBUG purposes to check the effect of prefiltering
+        debug_json_tweet_list.append(debug_tweet)
+        
+        prefiltered_tweet_list.append(prefilter_tweet(json_tweet)) #THIS DOESNT CATCH MULTIPLE LANGUAGES IN SAME TWEET, AND ALSO IT NEEDS TO BE FINE TUNED TO FURTHER REMOVE WEIRD TWEETS
 
-    location_keyword = "伊牟田"
-    json_tweet = obtain_tweet(location_keyword , "2019-01-01","2021-12-31","test_collection.json")
+        tweet_data_frame, tweet_includes_frame = extract_information_from_tweet_json(json_tweet, location_keyword)
+        tweet_data_frame_list.append(tweet_data_frame)
+        tweet_includes_frame_list.append(tweet_includes_frame)
 
-    tweet_data_frame, tweet_includes_frame = extract_information_from_tweet_json(json_tweet, location_keyword)
 
-    database = r"scraped_tweets.db" #Sometimes update to commands don't update because constraints get passed to table despite other errors. In those cases, delete table and recreate one with new changes/params
+    database = r"scraped_tweets5.db" #Sometimes update to commands don't update because constraints get passed to table despite other errors. In those cases, delete table and recreate one with new changes/params
 
 
     sql_create_data_table = """CREATE TABLE IF NOT EXISTS data_table (
                                     location_keyword text NOT NULL,
                                     text text NOT NULL,
-                                    author_id float NOT NULL, 
-                                    tweet_id float NOT NULL,
+                                    author_id text NOT NULL, 
+                                    tweet_id text NOT NULL,
                                     source text NOT NULL,
                                     retweet_count float NOT NULL,
                                     reply_count float NOT NULL,
@@ -206,7 +224,7 @@ def main():
                                     username text NOT NULL,
                                     created_at datetime NOT NULL, 
                                     description text,
-                                    user_id float NOT NULL,
+                                    user_id text NOT NULL,
                                     location text,
                                     name text NOT NULL
                                 );"""
@@ -230,14 +248,16 @@ def main():
     with conn:
 
         # populate data_table
-        list_of_tuples_from_data_frame = list(tweet_data_frame.itertuples(index=False, name=None))
-        for data_tuple in list_of_tuples_from_data_frame:
-            create_data_table(conn, data_tuple)
+        for tweet_data_frame in tweet_data_frame_list:
+            list_of_tuples_from_data_frame = list(tweet_data_frame.itertuples(index=False, name=None))
+            for data_tuple in list_of_tuples_from_data_frame:
+                create_data_table(conn, data_tuple)
 
         # populate includes_table
-        list_of_tuples_from_includes_frame = list(tweet_includes_frame.itertuples(index=False, name=None))
-        for includes_tuple in list_of_tuples_from_includes_frame:
-            create_includes_table(conn, includes_tuple)
+        for tweet_includes_frame in tweet_includes_frame_list:
+            list_of_tuples_from_includes_frame = list(tweet_includes_frame.itertuples(index=False, name=None))
+            for includes_tuple in list_of_tuples_from_includes_frame:
+                create_includes_table(conn, includes_tuple)
 
 
 main()
