@@ -1,7 +1,11 @@
 venv/
+.venv/
 __pycache__/
 /tempstore
 /tmp
 log.txt
 config.py
+sql_connection_reference_code.py
+CollectTweetRelatedToFSQ.py
+tweet_analysis_from_landy.py
 *.json
