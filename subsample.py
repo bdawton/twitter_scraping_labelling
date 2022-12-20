@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 r_s = 0
 # Read sqlite query results into a pandas DataFrame
-con = sqlite3.connect("scraped_tweets7.db")
+con = sqlite3.connect("scraped_tweets.db")
 df = pd.read_sql_query("SELECT * from data_table", con)
 
 # Verify that result of SQL query is stored in the dataframe

@@ -17,7 +17,7 @@ def obtain_tweet(_word, _start_time, _end_time,_output_Jsonfile):
         "query":query, 
         "start_time":start_time,
         "end_time":end_time,
-        "max_results":100,
+        "max_results":500, #Max comme Landy
         "expansions":"entities.mentions.username,author_id,attachments.media_keys,geo.place_id", 
         "tweet.fields":"created_at,geo,lang,entities,author_id,public_metrics,source",
         "media.fields":"preview_image_url,url",
@@ -50,7 +50,7 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
     tweet_quote_count_list = []
 
 
-    tweet_data = tweet_json["data"]
+    tweet_data = tweet_json["data"] BILLY YOU ALSO NEED TO OBTAIN AND STORE THE ACTUAL DATE OF THE TWEET IN THE DATABBASE TOO
     for tweet in tweet_data:
         #From out of function
         tweet_location_searchterm_list.append(location_searchterm)

@@ -14,7 +14,8 @@ def main():
     debug_json_tweet_list = []
     prefiltered_tweet_list = []
     for location_keyword in location_keyword_list:
-        json_tweet = tweet_input_output_functions.obtain_tweet(location_keyword , "2019-01-01","2021-12-31","test_collection.json")
+        json_tweet = tweet_input_output_functions.obtain_tweet(location_keyword , "2017-01-01"[CHANGE THIS TO A VARIABLE CORRESPODING TO START DATE AND LOOP],"2018-12-31"CHANGE THIS TO A VARIABLE CORRESPODING TO END DATE AND LOOP],"test_collection.json") ADD A FOR LOOP FOR EVERY 3 MONTHS (SO FOR EACH AREA, YOU GET 500 TWEETS EVERY 3 MONTHS) LANDY DID THIS SOMEWHERE WITH START AND END DATE LISTS
+        BILLY YOU ALSO NEED TO OBTAIN AND STORE THE ACTUAL DATE OF THE TWEET IN THE DATABBASE TOO
         debug_tweet = copy.deepcopy(json_tweet) #this is for DEBUG purposes to check the effect of prefiltering
         debug_json_tweet_list.append(debug_tweet)
         
