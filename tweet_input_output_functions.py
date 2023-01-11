@@ -7,7 +7,7 @@ import config
 
 
 
-def obtain_tweet(_word, _start_time, _end_time,_output_Jsonfile):
+def obtain_tweet(_word, _start_time, _end_time):
     URL = "https://api.twitter.com/2/tweets/search/all"
     headers = {'Content-Type': 'text/plain', "Authorization": config.Bearer}
     query = _word +" -is:retweet"
@@ -48,9 +48,10 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
     tweet_reply_count_list = []
     tweet_like_count_list = []
     tweet_quote_count_list = []
+    tweet_created_at_list = []
 
 
-    tweet_data = tweet_json["data"] BILLY YOU ALSO NEED TO OBTAIN AND STORE THE ACTUAL DATE OF THE TWEET IN THE DATABBASE TOO
+    tweet_data = tweet_json["data"]
     for tweet in tweet_data:
         #From out of function
         tweet_location_searchterm_list.append(location_searchterm)
@@ -58,11 +59,16 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
         tweet_text = tweet["text"]
         tweet_author_id = tweet["author_id"]
         tweet_tweet_id = tweet["id"]
-        tweet_source = tweet["source"]
+        if "source" in tweet_data:
+            tweet_source = tweet["source"]
+        else:
+            tweet_source = np.nan
+        tweet_created_at = tweet["created_at"]
         tweet_text_list.append(tweet_text)
         tweet_author_id_list.append(tweet_author_id)
         tweet_tweet_id_list.append(tweet_tweet_id)
         tweet_source_list.append(tweet_source)
+        tweet_created_at_list.append(tweet_created_at)
         #One Level Down
         tweet_retweet_count = tweet["public_metrics"]["retweet_count"]
         tweet_reply_count = tweet["public_metrics"]["reply_count"]
@@ -75,7 +81,7 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
         
 
     df_tweet_data = pd.DataFrame({"location_keyword":tweet_location_searchterm_list, "text":tweet_text_list , "author_id":tweet_author_id_list, 
-                                    "tweet_id":tweet_tweet_id_list, "source":tweet_source_list,
+                                    "tweet_id":tweet_tweet_id_list, "source":tweet_source_list, "created_at":tweet_created_at_list,
                                     "retweet_count":tweet_retweet_count_list , "reply_count":tweet_reply_count_list, 
                                     "like_count":tweet_like_count_list, "quote_count":tweet_quote_count_list})
     

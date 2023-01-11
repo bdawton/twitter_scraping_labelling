@@ -32,8 +32,8 @@ def create_data_table(conn, tweet_table):
     """
     Create a new entry into the data_table table
     """
-    sql = ''' INSERT INTO data_table(location_keyword, text , author_id, tweet_id, source, retweet_count, reply_count, like_count, quote_count)
-              VALUES(?,?,?,?,?,?,?,?,?) '''
+    sql = ''' INSERT INTO data_table(location_keyword, text , author_id, tweet_id, source, created_at, retweet_count, reply_count, like_count, quote_count)
+              VALUES(?,?,?,?,?,?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, tweet_table)
     conn.commit()
