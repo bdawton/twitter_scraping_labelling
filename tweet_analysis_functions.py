@@ -44,8 +44,6 @@ def prefilter_tweet(tweet_json):
             
         idx += 1
 
-    print(pop_idx_list)
-
     tweet_json['data'] = [i for j, i in enumerate(tweet_json['data']) if j not in set(pop_idx_list)] #set should be faster than list here
 
 

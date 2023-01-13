@@ -1,34 +1,65 @@
 import pandas as pd
 import numpy as np
 import copy
+import time
 import tweet_input_output_functions
 from tweet_analysis_functions import prefilter_tweet
 import sql_connection
 
 
 def main():
+
     #nlp = spacy.load('ja_ginza_electra')  #No idea when to deal with this
     tweet_data_frame_list = []
     tweet_includes_frame_list = []
-    location_keyword_list = ["伊牟田", "白糸滝", "香港"]
     debug_json_tweet_list = []
     prefiltered_tweet_list = []
     start_dates = ["2017-01-01", "2019-01-01"]
     end_dates = ["2018-12-31", "2020-12-31"]
+
+    text_file = open('tweet_queries.txt', 'r')
     
-    for start_date, end_date in zip(start_dates, end_dates):
-        for location_keyword in location_keyword_list:
-            json_tweet = tweet_input_output_functions.obtain_tweet(location_keyword , start_date, end_date)
-            debug_tweet = copy.deepcopy(json_tweet) #this is for DEBUG purposes to check the effect of prefiltering
-            debug_json_tweet_list.append(debug_tweet)
+    counter = 0
+
+    while True:
+        # Get next line from file
+
+        print(f"counter: {counter}")
+
+        line = text_file.readline()
+        
+
+        if line[0] != "=":
+
+            location_keyword = line
+            counter += 1
+
+            for c in ['\\', '&', '.', '"', "'"]: #The requests module doesn't like these characters, so we need to add a preventative backslash
+                if c in line:
+                    location_keyword = line.replace(c, "\\"+c)
+
+
+            print(location_keyword)
             
-            prefiltered_tweet_list.append(prefilter_tweet(json_tweet)) #THIS DOESNT CATCH MULTIPLE LANGUAGES IN SAME TWEET, AND ALSO IT NEEDS TO BE FINE TUNED TO FURTHER REMOVE WEIRD TWEETS
 
-            tweet_data_frame, tweet_includes_frame = tweet_input_output_functions.extract_information_from_tweet_json(json_tweet, location_keyword)
-            tweet_data_frame_list.append(tweet_data_frame)
-            tweet_includes_frame_list.append(tweet_includes_frame)
+            for start_date, end_date in zip(start_dates, end_dates):
+                json_tweet = tweet_input_output_functions.obtain_tweet(location_keyword , start_date, end_date)
+                print(json_tweet)
+                time.sleep(2.5) #To avoid too many requests error
+                if json_tweet["meta"]["result_count"] == 0:# also need to check length here
+                    continue
+                debug_tweet = copy.deepcopy(json_tweet) #this is for DEBUG purposes to check the effect of prefiltering
+                debug_json_tweet_list.append(debug_tweet)
+                prefiltered_tweet_list.append(prefilter_tweet(json_tweet)) #THIS DOESNT CATCH MULTIPLE LANGUAGES IN SAME TWEET, AND ALSO IT NEEDS TO BE FINE TUNED TO FURTHER REMOVE WEIRD TWEETS
+                tweet_data_frame, tweet_includes_frame = tweet_input_output_functions.extract_information_from_tweet_json(json_tweet, location_keyword)
+                tweet_data_frame_list.append(tweet_data_frame)
+                tweet_includes_frame_list.append(tweet_includes_frame)
+                
 
+        if not line:
+            break
 
+    text_file.close()
     database = r"scraped_tweetstest.db" #Sometimes update to commands don't update because constraints get passed to table despite other errors. In those cases, delete table and recreate one with new changes/params
 
 
