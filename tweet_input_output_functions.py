@@ -27,16 +27,12 @@ def obtain_tweet(_word, _start_time, _end_time):
     
     response = requests.get(URL, headers=headers, params=params).json()
 
-    with open("test.json", "w") as outfile:
-        json.dump(response, outfile)
-
-
     return response
 
 
 
 
-def extract_information_from_tweet_json(tweet_json, location_searchterm):
+def extract_information_from_tweet_json(tweet_data, tweet_users, location_searchterm):
 
     # Grab "data" data:
     tweet_location_searchterm_list = []
@@ -51,7 +47,6 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
     tweet_created_at_list = []
 
 
-    tweet_data = tweet_json["data"]
     for tweet in tweet_data:
         #From out of function
         tweet_location_searchterm_list.append(location_searchterm)
@@ -95,8 +90,8 @@ def extract_information_from_tweet_json(tweet_json, location_searchterm):
     user_location_list = []
     user_name_list = []
 
-    tweet_includes = tweet_json["includes"]
-    for user in tweet_includes["users"]:
+
+    for user in tweet_users:
         #From out of function
         user_location_searchterm_list.append(location_searchterm)
         #Top Level

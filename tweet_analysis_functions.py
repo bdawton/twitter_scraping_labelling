@@ -44,7 +44,15 @@ def prefilter_tweet(tweet_json):
             
         idx += 1
 
-    tweet_json['data'] = [i for j, i in enumerate(tweet_json['data']) if j not in set(pop_idx_list)] #set should be faster than list here
-
-
-    return tweet_json
+    #tweet_json['data'] = [i for j, i in enumerate(tweet_json['data']) if j not in set(pop_idx_list)] #set should be faster than list here
+    prefiltered_tweet_json_data = [i for j, i in enumerate(tweet_json['data']) if j not in set(pop_idx_list)] #set only unique values, and faster
+    prefiltered_data_author_list = []
+    for k in prefiltered_tweet_json_data:
+        prefiltered_data_author_list.append(k['author_id']) # We do not need to get unique values here, as we are using set() in this next line which autmoatically only considers unique values 
+    
+    prefiltered_tweet_json_users = []
+    for l in tweet_json['includes']['users']:
+        if l['id'] in set(prefiltered_data_author_list):
+            prefiltered_tweet_json_users.append(l)
+            
+    return prefiltered_tweet_json_data, prefiltered_tweet_json_users

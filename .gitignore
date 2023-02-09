@@ -8,4 +8,5 @@ config.py
 sql_connection_reference_code.py
 CollectTweetRelatedToFSQ.py
 tweet_analysis_from_landy.py
+.ipynb_checkpoints
 *.json
