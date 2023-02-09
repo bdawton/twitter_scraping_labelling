@@ -123,9 +123,7 @@ def extract_information_from_tweet_json(tweet_data, tweet_users, location_search
         user_name_list.append(user_name)
         
     
-        df_tweet_users = pd.DataFrame({"location_keyword":user_location_searchterm_list, "username":user_username_list , "created_at":user_created_at_list, 
-                                    "description":user_description_list, "user_id":user_id_list,
-                                    "location":user_location_list , "name":user_name_list})
+    df_tweet_users = pd.DataFrame({"location_keyword":user_location_searchterm_list, "username":user_username_list ,"created_at":user_created_at_list,"description":user_description_list, "user_id":user_id_list,"location":user_location_list,"name":user_name_list})
     
     
     return df_tweet_data, df_tweet_users
