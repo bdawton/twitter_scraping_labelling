@@ -1,2 +1,27 @@
 ======16027
-(Fukuoka OR 福岡)
+(荒津山 OR #荒津山)  (Fukuoka OR 福岡 OR Chuo OR 中央区)
+(荒平山 OR #荒平山)  (Fukuoka OR 福岡 OR Sawara OR 早良区)
+(毘沙門山 OR #毘沙門山)  (Fukuoka OR 福岡 OR Nishi OR 西区)
+======13003
+(や台ずし OR #や台ずし)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(中屋イオン香椎浜店 OR #中屋イオン香椎浜店)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(くいもんや横丁 OR #くいもんや横丁)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(イオンラウンジ 香椎浜 OR #イオンラウンジ香椎浜)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(かえるのへそ OR #かえるのへそ)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(海鮮食堂 い志い 照葉 OR #海鮮食堂い志い照葉)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+======13065
+(komeda's coffee  OR #komeda'scoffee OR コメダ珈琲店 福岡香椎浜店 OR #コメダ珈琲店福岡香椎浜店)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(ramen-ya tatsushi  OR #ramen-yatatsushi OR らーめん屋 たつし OR #らーめん屋たつし)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(kuzazushi  OR #kuzazushi OR くら寿司 香椎店 OR #くら寿司香椎店)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(hakata kokumaro  OR #hakatakokumaro OR 博多濃麻呂 名島橋店 OR #博多濃麻呂名島橋店)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(ドミノ・ピザイオンモール香椎浜店 OR #ドミノ・ピザイオンモール香椎浜店)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+======16021
+(道の駅水辺の郷 おおやま香椎店 OR #道の駅水辺の郷おおやま香椎店)  (Fukuoka OR 福岡 OR Higashi OR 東区)
+(tenjin yu no hana  OR #tenjinyunohana OR 天神ゆの華 OR #天神ゆの華)  (Fukuoka OR 福岡 OR Chuo OR 中央区)
+(夢園 OR #夢園)  (Fukuoka OR 福岡 OR Chuo OR 中央区)
+(天空の足湯 OR #天空の足湯)  (Fukuoka OR 福岡 OR Chuo OR 中央区)
+======17003
+(うなぎの寝床 OR #うなぎの寝床)  (Fukuoka OR 福岡 OR Hakata OR 博多区)
+(sanui 博多織 OR #sanui博多織)  (Fukuoka OR 福岡 OR Hakata OR 博多区)
+(デンソー九州 セキュリティの特急便 OR #デンソー九州セキュリティの特急便)  (Fukuoka OR 福岡 OR Hakata OR 博多区)
+(ビックバン OR #ビックバン)  (Fukuoka OR 福岡 OR Hakata OR 博多区)

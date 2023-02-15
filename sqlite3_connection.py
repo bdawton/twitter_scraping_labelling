@@ -32,8 +32,8 @@ def create_data_table(conn, tweet_table):
     """
     Create a new entry into the data_table table
     """
-    sql = ''' INSERT INTO data_table(location_keyword, text , author_id, tweet_id, source, created_at, retweet_count, reply_count, like_count, quote_count)
-              VALUES(?,?,?,?,?,?,?,?,?,?) '''
+    sql = ''' INSERT INTO data_table(location_category, location_keyword, text , author_id, tweet_id, source, created_at, retweet_count, reply_count, like_count, quote_count)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, tweet_table)
     conn.commit()
@@ -43,8 +43,8 @@ def create_includes_table(conn, tweet_table):
     """
     Create a new entry into the includes_table table
     """
-    sql = ''' INSERT INTO includes_table(location_keyword, username , created_at, description, user_id, location, name)
-              VALUES(?,?,?,?,?,?,?) '''
+    sql = ''' INSERT INTO includes_table(location_category, location_keyword, username , created_at, description, user_id, location, name)
+              VALUES(?,?,?,?,?,?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, tweet_table)
     conn.commit()
@@ -59,6 +59,7 @@ def create_sqlite_database(database_name, tweet_data_frame_list, tweet_includes_
         
         # create tweet_data table
         sql_create_data_table = """CREATE TABLE IF NOT EXISTS data_table (
+                                            location_category text NOT NULL,
                                             location_keyword text NOT NULL,
                                             text text NOT NULL,
                                             author_id text NOT NULL, 
@@ -74,6 +75,7 @@ def create_sqlite_database(database_name, tweet_data_frame_list, tweet_includes_
 
         # create tweet_includes table
         sql_create_includes_table = """CREATE TABLE IF NOT EXISTS includes_table (
+                                location_category text NOT NULL,
                                 location_keyword text NOT NULL,
                                 username text NOT NULL,
                                 created_at datetime NOT NULL, 

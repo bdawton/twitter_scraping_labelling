@@ -20,7 +20,9 @@ def main(db_type):
     text_file = open('tweet_queries.txt', 'r')
     
     lines = text_file.readlines()
-    
+
+    location_category = None
+
     counter = 0
 
     for line in lines:
@@ -28,8 +30,11 @@ def main(db_type):
 
         print(f"counter: {counter}")
         
+        if line[0] == "=":
+            location_category = line.split("=")[-1]
+            print(f"new category: {location_category}")
 
-        if line[0] != "=":
+        elif line[0] != "=":
 
             location_keyword = line
             counter += 1
@@ -38,8 +43,8 @@ def main(db_type):
                 if c in line:
                     location_keyword = line.replace(c, "\\"+c)
 
-
-            print(location_keyword)
+            print(f"location category: {location_category}")
+            print(f"location keyword: {location_keyword}")
             
 
             for start_date, end_date in zip(start_dates, end_dates):
@@ -78,12 +83,13 @@ def main(db_type):
                 else:
                     print('relevant results exist and will be logged')
 
-                tweet_data_frame, tweet_users_frame = extract_information_from_tweet_json(*prefilter_tweet(json_tweet), location_keyword) #asterisk to unpack the two returned values and use as inputs
+                tweet_data_frame, tweet_users_frame = extract_information_from_tweet_json(*prefilter_tweet(json_tweet), location_keyword, location_category) #asterisk to unpack the two returned values and use as inputs
                 tweet_data_frame_list.append(tweet_data_frame)
                 tweet_users_frame_list.append(tweet_users_frame)
                 
                 print('moving on to next keyword in list')
-
+        else:
+            print("file reading error, moving to next line and trying again")
     text_file.close()
     print('finished running through text file')
     

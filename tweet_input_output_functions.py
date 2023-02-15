@@ -32,9 +32,10 @@ def obtain_tweet(_word, _start_time, _end_time):
 
 
 
-def extract_information_from_tweet_json(tweet_data, tweet_users, location_searchterm):
+def extract_information_from_tweet_json(tweet_data, tweet_users, location_searchterm, location_categorynumber):
 
     # Grab "data" data:
+    tweet_location_categorynumber_list = []
     tweet_location_searchterm_list = []
     tweet_text_list = []
     tweet_author_id_list = []
@@ -49,6 +50,7 @@ def extract_information_from_tweet_json(tweet_data, tweet_users, location_search
 
     for tweet in tweet_data:
         #From out of function
+        tweet_location_categorynumber_list.append(location_categorynumber)
         tweet_location_searchterm_list.append(location_searchterm)
         #Top Level
         tweet_text = tweet["text"]
@@ -75,7 +77,7 @@ def extract_information_from_tweet_json(tweet_data, tweet_users, location_search
         tweet_quote_count_list.append(tweet_quote_count)
         
 
-    df_tweet_data = pd.DataFrame({"location_keyword":tweet_location_searchterm_list, "text":tweet_text_list , "author_id":tweet_author_id_list, 
+    df_tweet_data = pd.DataFrame({"location_category":tweet_location_categorynumber_list, "location_keyword":tweet_location_searchterm_list, "text":tweet_text_list , "author_id":tweet_author_id_list, 
                                     "tweet_id":tweet_tweet_id_list, "source":tweet_source_list, "created_at":tweet_created_at_list,
                                     "retweet_count":tweet_retweet_count_list , "reply_count":tweet_reply_count_list, 
                                     "like_count":tweet_like_count_list, "quote_count":tweet_quote_count_list})
@@ -83,6 +85,7 @@ def extract_information_from_tweet_json(tweet_data, tweet_users, location_search
     
     # Grab "users" data:
     user_location_searchterm_list = []
+    user_location_categorynumber_list = []
     user_username_list = []
     user_created_at_list = []
     user_description_list = []
@@ -93,6 +96,7 @@ def extract_information_from_tweet_json(tweet_data, tweet_users, location_search
 
     for user in tweet_users:
         #From out of function
+        user_location_categorynumber_list.append(location_categorynumber)
         user_location_searchterm_list.append(location_searchterm)
         #Top Level
         user_username = user["username"]
@@ -123,7 +127,7 @@ def extract_information_from_tweet_json(tweet_data, tweet_users, location_search
         user_name_list.append(user_name)
         
     
-    df_tweet_users = pd.DataFrame({"location_keyword":user_location_searchterm_list, "username":user_username_list ,"created_at":user_created_at_list,"description":user_description_list, "user_id":user_id_list,"location":user_location_list,"name":user_name_list})
+    df_tweet_users = pd.DataFrame({"location_category":user_location_categorynumber_list,"location_keyword":user_location_searchterm_list, "username":user_username_list ,"created_at":user_created_at_list,"description":user_description_list, "user_id":user_id_list,"location":user_location_list,"name":user_name_list})
     
     
     return df_tweet_data, df_tweet_users
