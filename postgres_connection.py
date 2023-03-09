@@ -6,10 +6,10 @@ from tweet_analysis_functions import prefilter_tweet
 
 engine = sa.create_engine(config.engine ,connect_args={"connect_timeout": 60})
 
-def create_postgres_database(tweet_data_frame_list, tweet_users_frame_list):
+def create_postgres_database(tweet_data_frame_list, tweet_users_frame_list, data_table, users_table):
 
-    data_table_name = 'data_table'
-    users_table_name = 'users_table'
+    data_table_name = data_table
+    users_table_name = users_table
 
 
     if (isinstance(tweet_data_frame_list, pd.DataFrame) and isinstance(tweet_users_frame_list, pd.DataFrame)):
